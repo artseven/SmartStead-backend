@@ -10,7 +10,9 @@ const session      = require('express-session');
 const passport     = require('passport');
 const bcrypt       = require('bcrypt');
 const flash        = require('connect-flash');
+const passportSetup = require('./config/passport-config');
 
+passportSetup(passport);
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
 // require('dotenv').config();
 mongoose.connect('mongodb://localhost/smartstead-backend');
@@ -48,27 +50,16 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// PASSPORT GOES THROUGH THIS
-// 1. Our form
-// 2. LocalStrategy callback
-// 3.(if successful) passport.serializeUser()
-// const FbStrategy = require('passport-facebook').Strategy;
-// const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-// const LocalStrategy = require('passport-local').Strategy;
-
-// Only if logged in
-//  user: req.user for all renders
-// Also after passport middleware
-app.use((req, res, next) => {
-  if (req.user) {
-    res.locals.user = req.user;
-  }
-  next();
-});
 //---------HERE GO ALL THE ROUTES-------------------
 const index = require('./routes/index');
 app.use('/', index);
 
+const authRoutes = require('./routes/auth-routes');
+app.use('/', authRoutes);
+
+app.use((req, res, next) => {
+  res.sendfile(__dirname + '/public/index.html');
+});
 // -------------------------------------------------
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
