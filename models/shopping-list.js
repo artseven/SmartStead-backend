@@ -1,0 +1,24 @@
+const mongoose = require('mongoose');
+
+// const User = require('./user-model.js');
+
+const Schema   = mongoose.Schema;
+
+const shoppingSchema = new Schema(
+  {
+    name: { type: String },
+    quantity: { type: Number},
+    // photoAddress: { type: String },
+    // reference the ID of the user
+    owner: { type: Schema.Types.ObjectId }
+    // user as a subdocument
+    // owner: { type: User.schema }
+  },
+  {
+    timestamps: true
+  }
+);
+
+const ShoppingList = mongoose.model('ShoppingList', shoppingSchema);
+
+module.exports = ShoppingList;
