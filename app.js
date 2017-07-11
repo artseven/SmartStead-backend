@@ -66,8 +66,6 @@ app.use('/', index);
 const authRoutes = require('./routes/auth-routes');
 app.use('/', authRoutes);
 
-const api = require('./')
-
 app.use(ensure.ensureLoggedIn());
 
 app.use((req, res, next) => {
