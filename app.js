@@ -11,6 +11,7 @@ const passport     = require('passport');
 const bcrypt       = require('bcrypt');
 const flash        = require('connect-flash');
 const passportSetup = require('./config/passport-config');
+const ensure       = require('connect-ensure-login');
 
 passportSetup(passport);
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
@@ -19,6 +20,12 @@ mongoose.connect('mongodb://localhost/smartstead-backend');
 
 const app = express();
 
+//use cross origin resource sharing
+const cors = require('cors');
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:4200']
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -40,7 +47,8 @@ app.use(session({
   secret: 'ArtSecret',
   // These two options are to prevent warnings
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { httpOnly: true, maxAge: 2419200000}
 }) );
 
 app.use(flash());
@@ -56,6 +64,9 @@ app.use('/', index);
 
 const authRoutes = require('./routes/auth-routes');
 app.use('/', authRoutes);
+
+
+app.use(ensure.ensureLoggedIn());
 
 app.use((req, res, next) => {
   res.sendfile(__dirname + '/public/index.html');

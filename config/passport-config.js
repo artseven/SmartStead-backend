@@ -26,9 +26,9 @@ module.exports = function (passport) {
   }));
 
   passport.serializeUser((loggedInUser, cb) => {
-    cb(null, loggedInUser._id);
+    cb(null, loggedInUser._id); //We save only id
   });
-
+//deSerialize -> get Everything back from DB by using id from session
   passport.deserializeUser((userIdFromSession, cb) => {
     User.findById(userIdFromSession, (err, userDocument) => {
       if (err) {
@@ -37,6 +37,7 @@ module.exports = function (passport) {
       }
 
       cb(null, userDocument);
+      //Here we can pull any variable that we need everywhere, in our case we pulling USER document
     });
   });
 
