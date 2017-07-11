@@ -19,9 +19,6 @@ const userSchema = new Schema(
 
     // Login with Facebook users
     facebookID: { type: String },
-
-    // Login with Google users
-    googleID: { type: String}
   },
     //2nd arg -> additional options
   {

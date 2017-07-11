@@ -8,6 +8,7 @@ const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
 const session      = require('express-session');
 const passport     = require('passport');
+const http         = require('http');
 const bcrypt       = require('bcrypt');
 const flash        = require('connect-flash');
 const passportSetup = require('./config/passport-config');
@@ -65,6 +66,7 @@ app.use('/', index);
 const authRoutes = require('./routes/auth-routes');
 app.use('/', authRoutes);
 
+const api = require('./')
 
 app.use(ensure.ensureLoggedIn());
 
