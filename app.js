@@ -85,6 +85,9 @@ app.use('/', index);
 const authRoutes = require('./routes/auth-routes');
 app.use('/', authRoutes);
 
+const userRoutes = require('./routes/user-routes');
+app.use('/', userRoutes);
+
 app.use(ensure.ensureLoggedIn());
 
 app.use((req, res, next) => {
