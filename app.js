@@ -13,6 +13,7 @@ const bcrypt       = require('bcrypt');
 const flash        = require('connect-flash');
 const passportSetup = require('./config/passport-config');
 const ensure       = require('connect-ensure-login');
+const hue          = require('node-hue-api');
 
 passportSetup(passport);
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
