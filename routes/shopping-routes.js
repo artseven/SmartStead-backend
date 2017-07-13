@@ -6,28 +6,19 @@ const path         = require('path');
 const ShoppingList = require('../models/shopping-list.js');
 
 
-router.get('/cart'),
+router.get('/cart',
   ensure.ensureLoggedIn('/login'),
-  (req, res, next)
-// router.get('/rooms',
-//   ensure.ensureLoggedIn('/login'),
-//   (req, res, next) => {
-//     Room.find(
-//       { owner: req.user._id },
-//       (err, roomsList) => {
-//         if (err) {
-//           next(err);
-//           return;
-//         }
-//
-//         res.render('rooms/rooms-list-view.ejs', {
-//           rooms: roomsList,
-//           successMessage: req.flash('success')
-//         });
-//       }
-//     );
-//   }
-// );
+  (req, res, next) => {
+    ShoppingList.find((err, shoppingList) => {
+      if (err) {
+        next (err);
+        return;
+      }
+      res.json(shoppingList);
+    });
+});
+
+
 // router.get('/cart/new',
 // // We need to be logged in to create rooms
 //   ensure.ensureLoggedIn('/login'),
