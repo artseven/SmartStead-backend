@@ -18,7 +18,16 @@ router.get('/cart',
     });
 });
 
+// router.post('cart',
+//
+// );
 
+// router.get('/cart/new',
+//   ensure.ensureLoggedIn('/login'),
+//   (req, res, next) => {
+//     res.s
+//   }
+// )
 // router.get('/cart/new',
 // // We need to be logged in to create rooms
 //   ensure.ensureLoggedIn('/login'),
