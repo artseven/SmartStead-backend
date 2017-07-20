@@ -11,10 +11,9 @@ const passport     = require('passport');
 const http         = require('http');
 const bcrypt       = require('bcrypt');
 const flash        = require('connect-flash');
-const passportSetup = require('./config/passport-config');
 const hue          = require('node-hue-api');
 
-passportSetup(passport);
+require('./config/passport-config');
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
 // require('dotenv').config();
 mongoose.connect('mongodb://localhost/smartstead-backend');
