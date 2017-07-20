@@ -59,18 +59,16 @@ app.use(passport.session());
 const index = require('./routes/index');
 app.use('/', index);
 
-const authRoutes = require('./routes/auth-routes');
+const authRoutes = require('./routes/auth-api-routes');
 app.use('/', authRoutes);
 
-const userRoutes = require('./routes/user-routes');
-app.use('/', userRoutes);
-
-app.use(ensure.ensureLoggedIn());
-
+// -------------------------------------------------
+// Display the Angular app if no route matches
 app.use((req, res, next) => {
   res.sendfile(__dirname + '/public/index.html');
 });
-// -------------------------------------------------
+
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
