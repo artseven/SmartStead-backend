@@ -1,44 +1,52 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User          = require('../models/user');
 const bcrypt        = require('bcrypt');
+passport.serializeUser((userFromDb, next) => {
+  next(null, userFromDb._id);
+});
 
-module.exports = function (passport) {
+passport.deserializeUser((idFromSession, next) => {
+  UserModel.findById(
+    idFromSession,
 
-  passport.use(new LocalStrategy((username, password, next) => {
-    User.findOne({ username }, (err, foundUser) => {
+    (err, userFromDb) => {
       if (err) {
         next(err);
         return;
       }
 
-      if (!foundUser) {
-        next(null, false, { message: 'Incorrect username' });
-        return;
+      next(null, userFromDb);
+    }
+  );
+});
+
+
+passport.use(new LocalStrategy(
+  {
+    usernameField: 'loginEmail',
+    passwordField: 'loginPassword'
+  },
+  (apiEmail, apiPassword, next) => {
+    UserModel.findOne(
+      { email: apiEmail },
+      (err, userFromDb) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        if (!userFromDb) {
+          next(null, false, { message: 'Email invalid, fool.'});
+          return;
+        }
+
+        if(!bcrypt.compareSync(apiPassword, userFromDb.encryptedPassword)) {
+          next(null, false, { message: 'Password invalid, fool.'});
+          return;
+        }
+
+        next(null, userFromDb);
       }
-
-      if (!bcrypt.compareSync(password, foundUser.password)) {
-        next(null, false, { message: 'Incorrect password' });
-        return;
-      }
-
-      next(null, foundUser);
-    });
-  }));
-
-  passport.serializeUser((loggedInUser, cb) => {
-    cb(null, loggedInUser._id); //We save only id
-  });
-//deSerialize -> get Everything back from DB by using id from session
-  passport.deserializeUser((userIdFromSession, cb) => {
-    User.findById(userIdFromSession, (err, userDocument) => {
-      if (err) {
-        cb(err);
-        return;
-      }
-
-      cb(null, userDocument);
-      //Here we can pull any variable that we need everywhere, in our case we pulling USER document
-    });
-  });
-
-};
+    );
+  }
+));
