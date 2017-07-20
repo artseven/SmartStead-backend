@@ -12,7 +12,6 @@ const http         = require('http');
 const bcrypt       = require('bcrypt');
 const flash        = require('connect-flash');
 const passportSetup = require('./config/passport-config');
-const ensure       = require('connect-ensure-login');
 const hue          = require('node-hue-api');
 
 passportSetup(passport);
@@ -43,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts);
+app.use(flash());
 
 app.use(session({
   // Change to create unique access key as a secret string
@@ -50,34 +50,12 @@ app.use(session({
   // These two options are to prevent warnings
   resave: true,
   saveUninitialized: true,
-  cookie: { httpOnly: true, maxAge: 2419200000}
+  // cookie: { httpOnly: true, maxAge: 2419200000}
 }) );
-
-app.use(flash());
-
 
 // These need to come AFTER the session middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'application/json,X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
 //---------HERE GO ALL THE ROUTES-------------------
 const index = require('./routes/index');
 app.use('/', index);
