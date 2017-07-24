@@ -17,6 +17,6 @@ const shoppingSchema = new Schema({
     timestamps: true
 });
 
-const ShoppingList = mongoose.model('ShoppingList', shoppingSchema);
+const ShoppingItem = mongoose.model('ShoppingItem', shoppingSchema);
 
-module.exports = ShoppingList;
+module.exports = ShoppingItem;

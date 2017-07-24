@@ -3,14 +3,14 @@ const ensure = require('connect-ensure-login');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const ShoppingList = require('../models/shopping-list.js');
+const ShoppingItem = require('../models/shopping-list.js');
 
 
 router.get('/cart',
     ensure.ensureLoggedIn('/login'),
     (req, res, next) => {
         // use mongoose to get all things in the database
-        ShoppingList.find((err, shoppingList) => {
+        ShoppingItem.find((err, shoppingList) => {
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err) {
                 next(err);
@@ -24,7 +24,7 @@ router.post('/cart',
     ensure.ensureLoggedIn('/login'),
     function(req, res) {
         // create a new entry in the shoppingList, information comes from Angular Ajax
-        ShoppingList.create({
+        ShoppingItem.create({
             name: req.body.productName,
             quantity: req.body.productQuantity,
             bought: false
@@ -33,10 +33,27 @@ router.post('/cart',
                 res.send(err);
 
             //get and return all the items in the ShoppingList after creation of another one
-            ShoppingList.find(function(err, shoppingItems) {
+            ShoppingItem.find(function(err, shoppingItems) {
                 if (err)
                     res.send(err)
                 res.json(shoppingItems);
             });
+        });
+    });
+
+router.delete('/cart/:shoppingitem_id',
+    function(req, res) {
+        ShoppingItem.remove({
+            _id: req.params.shoppingItem_id
+        }, function(err, shoppingItem) {
+            if (err)
+                res.send(err);
+
+
+            ShoppingItem.find(function(err, items) {
+                if (err)
+                    res.send(err)
+                res.json(items);
+            })
         });
     });
