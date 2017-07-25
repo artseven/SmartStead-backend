@@ -12,7 +12,7 @@ const http = require('http');
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const hue = require('node-hue-api');
-
+const overlook = require('overlook');
 require('./config/passport-config');
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
 // require('dotenv').config();
@@ -64,6 +64,9 @@ app.use('/', authRoutes);
 
 const shoppingRoutes = require('./routes/shopping-api-routes');
 app.use('/', shoppingRoutes);
+
+const cameraRoutes = require('./routes/camera-api-routes');
+app.use('/', cameraRoutes);
 // -------------------------------------------------
 // Display the Angular app if no route matches
 app.use((req, res, next) => {
