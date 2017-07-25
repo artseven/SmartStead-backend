@@ -6,16 +6,19 @@ const path = require('path');
 const ShoppingItem = require('../models/shopping-list.js');
 const Overlook = require('overlook');
 const cam = Overlook();
+const request = require('request');
+
 
 
 router.get('/api/camera',
     ensure.ensureLoggedIn('/login'),
     (req, res, next) => {
+        // Camera setuprs
         cam.setup({
-                host: 'mycamera.lan',
+                host: '192.168.0.106',
                 port: 81,
                 user: 'admin',
-                pass: '',
+                pass: 'tenvis1@'
             },
             function(status) {
                 if (!status) {
@@ -25,8 +28,11 @@ router.get('/api/camera',
                 }
             }
         );
+        console.log(cam.status);
+        cam.camera_params(console.log);
+        console.log(Overlook.status);
+        res.render('camera.ejs')
     });
-
 // // use mongoose to get all things in the database
 // ShoppingItem.find((err, shoppingItems) => {
 //     // if there is an error retrieving, send the error. nothing after res.send(err) will execute

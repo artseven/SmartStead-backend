@@ -13,6 +13,8 @@ const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const hue = require('node-hue-api');
 const overlook = require('overlook');
+const cam = overlook();
+const request = require('request');
 require('./config/passport-config');
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
 // require('dotenv').config();
