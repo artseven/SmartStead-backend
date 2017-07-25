@@ -1,12 +1,13 @@
 const express = require('express');
 const ensure = require('connect-ensure-login');
+const ensureLoggedInApiVersion = require('../lib/ensure-logged-in-api');
 const router = express.Router();
 const path = require('path');
 const ShoppingItem = require('../models/shopping-list.js');
 const UserModel = require('../models/user-model.js')
 
 router.get('/api/cart',
-    ensure.ensureLoggedIn('/login'),
+    ensureLoggedInApiVersion,
     (req, res, next) => {
         // use mongoose to get all things in the database
         ShoppingItem.find((err, shoppingItems) => {
@@ -20,7 +21,7 @@ router.get('/api/cart',
     });
 
 router.post('/api/cart',
-    ensure.ensureLoggedIn('/login'),
+    ensureLoggedInApiVersion,
     function(req, res, next) {
         // create a new entry in the shoppingList, information comes from Angular Ajax
         ShoppingItem.create({
