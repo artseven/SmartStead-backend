@@ -3,7 +3,7 @@ const ensure = require('connect-ensure-login');
 const router = express.Router();
 const path = require('path');
 const ShoppingItem = require('../models/shopping-list.js');
-
+const UserModel = require('../models/user-model.js')
 
 router.get('/api/cart',
     ensure.ensureLoggedIn('/login'),
