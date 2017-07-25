@@ -9,13 +9,13 @@ router.get('/api/cart',
     ensure.ensureLoggedIn('/login'),
     (req, res, next) => {
         // use mongoose to get all things in the database
-        ShoppingItem.find((err, shoppingList) => {
+        ShoppingItem.find((err, shoppingItems) => {
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err) {
                 next(err);
                 return;
             }
-            res.json(shoppingList); //return all things in the cart in JSON
+            res.json(shoppingItems); //return all things in the cart in JSON
         });
     });
 
