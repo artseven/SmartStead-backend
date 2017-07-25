@@ -31,7 +31,7 @@ router.post('/api/cart',
             if (err)
                 res.send(err);
 
-            //get and return all the items in the ShoppingList after creation of another one
+            //get and return all the items in the ShoppingList after creation of another item
             ShoppingItem.find(function(err, shoppingItems) {
                 if (err)
                     res.send(err)
@@ -43,11 +43,10 @@ router.post('/api/cart',
 router.delete('/api/cart/:shoppingitem_id',
     function(req, res) {
         ShoppingItem.remove({
-            _id: req.params.shoppingItem_id
+            _id: req.params.shoppingitem_id
         }, function(err, shoppingItem) {
             if (err)
                 res.send(err);
-
 
             ShoppingItem.find(function(err, items) {
                 if (err)
