@@ -1,12 +1,11 @@
 const express = require('express');
 const ensure = require('connect-ensure-login');
 const router = express.Router();
-const multer = require('multer');
 const path = require('path');
 const ShoppingItem = require('../models/shopping-list.js');
 
 
-router.get('/cart',
+router.get('/api/cart',
     ensure.ensureLoggedIn('/login'),
     (req, res, next) => {
         // use mongoose to get all things in the database
@@ -20,9 +19,9 @@ router.get('/cart',
         });
     });
 
-router.post('/cart',
+router.post('/api/cart',
     ensure.ensureLoggedIn('/login'),
-    function(req, res) {
+    function(req, res, next) {
         // create a new entry in the shoppingList, information comes from Angular Ajax
         ShoppingItem.create({
             name: req.body.productName,
@@ -41,7 +40,7 @@ router.post('/cart',
         });
     });
 
-router.delete('/cart/:shoppingitem_id',
+router.delete('/api/cart/:shoppingitem_id',
     function(req, res) {
         ShoppingItem.remove({
             _id: req.params.shoppingItem_id
@@ -57,3 +56,5 @@ router.delete('/cart/:shoppingitem_id',
             })
         });
     });
+
+module.exports = router;

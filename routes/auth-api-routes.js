@@ -2,7 +2,6 @@ const passport = require('passport');
 const express = require('express');
 const bcrypt = require('bcrypt');
 
-
 const UserModel = require('../models/user-model');
 
 
@@ -15,49 +14,48 @@ router.post('/api/signup', (req, res, next) => {
     const thePassword = req.body.signupPassword;
 
     if (!theEmail || !thePassword) {
-      res.status(400).json({ message: 'Please provide an email & password' });
-      return;
+        res.status(400).json({ message: 'Please provide an email & password' });
+        return;
     }
 
-    UserModel.findOne(
-      { email: theEmail },
-      (err, userFromDb) => {
-          if (err) {
-            res.status(500).json({ message: 'Something went wrong with e-mail check.' });
-            return;
-          }
-
-          if (userFromDb) {
-            res.status(400).json({ message: 'E-mail is already taken.' });
-            return;
-          }
-
-          const salt = bcrypt.genSaltSync(10);
-          const scrambledPassword = bcrypt.hashSync(thePassword, salt);
-
-          const theUser = new UserModel({
-            fullName: theFullName,
-            email: theEmail,
-            encryptedPassword: scrambledPassword
-          });
-
-          theUser.save((err) => {
-              if (err) {
-                res.status(500).json({ message: 'User was not saved' });
+    UserModel.findOne({ email: theEmail },
+        (err, userFromDb) => {
+            if (err) {
+                res.status(500).json({ message: 'Something went wrong with e-mail check.' });
                 return;
-              }
+            }
 
-              // Log in the user automatically after signup
-              req.login(theUser, (err) => {
-                  if (err) {
-                    res.status(500).json({ message: 'Login did not work.' });
+            if (userFromDb) {
+                res.status(400).json({ message: 'E-mail is already taken.' });
+                return;
+            }
+
+            const salt = bcrypt.genSaltSync(10);
+            const scrambledPassword = bcrypt.hashSync(thePassword, salt);
+
+            const theUser = new UserModel({
+                fullName: theFullName,
+                email: theEmail,
+                encryptedPassword: scrambledPassword
+            });
+
+            theUser.save((err) => {
+                if (err) {
+                    res.status(500).json({ message: 'User was not saved' });
                     return;
-                  }
+                }
 
-                  res.status(200).json(theUser);
-              });
-          });
-      }
+                // Log in the user automatically after signup
+                req.login(theUser, (err) => {
+                    if (err) {
+                        res.status(500).json({ message: 'Login did not work.' });
+                        return;
+                    }
+
+                    res.status(200).json(theUser);
+                });
+            });
+        }
     );
 });
 
@@ -65,21 +63,21 @@ router.post('/api/signup', (req, res, next) => {
 router.post('/api/login', (req, res, next) => {
     const myFunction = passport.authenticate('local', (err, theUser, failureDetails) => {
         if (err) {
-          res.status(500).json({ message: 'Something went wrong.' });
-          return;
+            res.status(500).json({ message: 'Something went wrong.' });
+            return;
         }
 
         if (!theUser) {
-          // "failureDetails" contains the error messages
-          // from our logic in "LocalStrategy" { message: 'Email invalid, fool.' }.
-          res.status(401).json(failureDetails);
-          return;
+            // "failureDetails" contains the error messages
+            // from our logic in "LocalStrategy" { message: 'Email invalid, fool.' }.
+            res.status(401).json(failureDetails);
+            return;
         }
 
         req.login(theUser, (err) => {
             if (err) {
-              res.status(500).json({ message: 'Passport login crashed.' });
-              return;
+                res.status(500).json({ message: 'Passport login crashed.' });
+                return;
             }
 
             res.status(200).json(theUser);
@@ -98,8 +96,8 @@ router.post('/api/logout', (req, res, next) => {
 
 router.get('/api/checklogin', (req, res, next) => {
     if (req.isAuthenticated()) {
-      res.status(200).json(req.user);
-      return;
+        res.status(200).json(req.user);
+        return;
     }
 
     res.status(401).json({ message: 'Unauthorized' });

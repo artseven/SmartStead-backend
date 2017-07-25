@@ -10,7 +10,7 @@ const shoppingSchema = new Schema({
     // photoAddress: { type: String },
     // reference the ID of the user
     owner: { type: Schema.Types.ObjectId },
-    bought: { type: boolean }
+    bought: { type: Boolean }
     // user as a subdocument
     // owner: { type: User.schema }
 }, {
