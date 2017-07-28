@@ -69,6 +69,9 @@ app.use('/', shoppingRoutes);
 
 const cameraRoutes = require('./routes/camera-api-routes');
 app.use('/', cameraRoutes);
+
+const lightRoutes = require('./routes/camera-api-routes');
+app.use('/', lightRoutes);
 // -------------------------------------------------
 // Display the Angular app if no route matches
 app.use((req, res, next) => {
