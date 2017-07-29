@@ -6,39 +6,77 @@ const path = require('path');
 const request = require('request');
 
 
+// var options = {
+//     method: 'GET',
+//     url: 'http://usa22543.mytenvis.org/cgi-bin/hi3510/ptzctrl.cgi',
+//     headers: { authorization: 'Basic YWRtaW46dGVudmlzMUA=' },
+//     qs: { '-step': '1', '-act': 'left', '-speed': '45', 'username': 'admin', 'password':  }
+// };
 
-router.get('/api/camera',
-    ensure.ensureLoggedIn('/login'),
-    (req, res, next) => {
-        // Camera setuprs
-        cam.setup({
-                host: '192.168.0.106',
-                port: 81,
-                user: 'admin',
-                pass: 'tenvis1@'
-            },
-            function(status) {
-                if (!status) {
-                    console.error('ERROR: can\'t connect');
-                } else {
-                    console.log(status);
-                }
-            }
-        );
-        console.log(cam.status);
-        cam.camera_params(console.log);
-        // console.log(Overlook.status);
-        res.render('camera.ejs')
+// request(options, function(error, response, body) {
+//     if (error) throw new Error(error);
+
+//     console.log(body);
+// });
+
+router.post('/api/camera/left', (req, res, next) => {
+    var options = {
+        method: 'GET',
+        url: 'http://usa22543.mytenvis.org/cgi-bin/hi3510/ptzctrl.cgi',
+        qs: { '-step': '1', '-act': 'left', '-speed': '45' },
+        headers: { authorization: 'Basic YWRtaW46dGVudmlzMUA=' }
+    };
+
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
     });
-// // use mongoose to get all things in the database
-// ShoppingItem.find((err, shoppingItems) => {
-//     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-//     if (err) {
-//         next(err);
-//         return;
-//     }
-//     res.json(shoppingItems); //return all things in the cart in JSON
+});
 
+router.post('/api/camera/right', (req, res, next) => {
+    var options = {
+        method: 'GET',
+        url: 'http://usa22543.mytenvis.org/cgi-bin/hi3510/ptzctrl.cgi',
+        qs: { '-step': '1', '-act': 'right', '-speed': '45' },
+        headers: { authorization: 'Basic YWRtaW46dGVudmlzMUA=' }
+    };
 
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
+    });
+});
+
+router.post('/api/camera/down', (req, res, next) => {
+    var options = {
+        method: 'GET',
+        url: 'http://usa22543.mytenvis.org/cgi-bin/hi3510/ptzctrl.cgi',
+        qs: { '-step': '1', '-act': 'down', '-speed': '45' },
+        headers: { authorization: 'Basic YWRtaW46dGVudmlzMUA=' }
+    };
+
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
+    });
+});
+
+router.post('/api/camera/up', (req, res, next) => {
+    var options = {
+        method: 'GET',
+        url: 'http://usa22543.mytenvis.org/cgi-bin/hi3510/ptzctrl.cgi',
+        qs: { '-step': '1', '-act': 'up', '-speed': '45' },
+        headers: { authorization: 'Basic YWRtaW46dGVudmlzMUA=' }
+    };
+
+    request(options, function(error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
+    });
+});
 
 module.exports = router;
