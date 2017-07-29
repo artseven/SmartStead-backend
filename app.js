@@ -73,8 +73,8 @@ app.use('/', cameraRoutes);
 const lightRoutes = require('./routes/light-api-routes');
 app.use('/', lightRoutes);
 
-const calendarRoutes = require('./routes/calendar-routes');
-app.use('/', calendarRoutes);
+// const calendarRoutes = require('./routes/calendar-routes');
+// app.use('/', calendarRoutes);
 // -------------------------------------------------
 // Display the Angular app if no route matches
 // app.use((req, res, next) => {
