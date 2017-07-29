@@ -13,9 +13,6 @@ var headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
 }
 
-
-
-
 // router.get('api/lights', (req, res, next) => {
 //     res => res.json();
 
@@ -23,26 +20,30 @@ var headers = {
 
 router.post('/api/lights/on', (req, res, next) => {
     console.log("MY POST REQUEST STARTS HERE-----")
-    var object = {
-        bridgeId: "001788fffe4c72e9",
-        clipCommand: {
-            url: "/api/0/groups/0/action",
-            method: "PUT",
-            body: { "on": true, "bri": 200 }
-        }
-    };
+
     // options
     var options = {
         url: 'https://www.meethue.com/api/sendmessage?token=8ee7d03f19ec6cc3b9ed11229e5689b1a59b34f1a4575fad8127d5a0b5f77014',
         method: 'POST',
         headers: headers,
         form: {
-            'clipmessage': object
+            clipmessage: {
+                bridgeId: "001788fffe4c72e9",
+                clipCommand: {
+                    url: "/api/0/groups/0/action",
+                    method: "PUT",
+                    body: {
+                        "on": true,
+                        "bri": 200
+                    }
+                }
+            }
         }
+
     }
 
     // Start the request
-    request(options, function(error, response, body) {
+    request.post(options, function(error, response, body) {
         // console.log('BODY before' + body);
         if (!error && response.statusCode == 200) {
             // Print out the response body
