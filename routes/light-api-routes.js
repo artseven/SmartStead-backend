@@ -4,24 +4,21 @@ const ensureLoggedInApiVersion = require('../lib/ensure-logged-in-api');
 const router = express.Router();
 const path = require('path');
 const http = require('http');
+const https = require('https');
 const ShoppingItem = require('../models/shopping-list.js');
 const UserModel = require('../models/user-model.js')
 const request = require('request');
 
-// Set the headers
-var headers = {
-    'Content-Type': 'application/x-www-form-urlencoded'
-}
 
-// router.get('api/lights', (req, res, next) => {
-//     res => res.json();
 
-// });
 
 router.post('/api/lights/on', (req, res, next) => {
     console.log("MY POST REQUEST STARTS HERE-----")
-
-    // options
+        // Set the headers
+    var headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        // options
     var options = {
         url: 'https://www.meethue.com/api/sendmessage?token=8ee7d03f19ec6cc3b9ed11229e5689b1a59b34f1a4575fad8127d5a0b5f77014',
         method: 'POST',
