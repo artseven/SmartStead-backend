@@ -70,13 +70,16 @@ app.use('/', shoppingRoutes);
 const cameraRoutes = require('./routes/camera-api-routes');
 app.use('/', cameraRoutes);
 
-const lightRoutes = require('./routes/camera-api-routes');
+const lightRoutes = require('./routes/light-api-routes');
 app.use('/', lightRoutes);
+
+const calendarRoutes = require('./routes/calendar-routes');
+app.use('/', calendarRoutes);
 // -------------------------------------------------
 // Display the Angular app if no route matches
-app.use((req, res, next) => {
-    res.sendfile(__dirname + '/public/index.html');
-});
+// app.use((req, res, next) => {
+//     res.sendFile(__dirname + '/public/index.html');
+// });
 
 
 // catch 404 and forward to error handler
