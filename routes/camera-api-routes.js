@@ -3,9 +3,6 @@ const ensure = require('connect-ensure-login');
 
 const router = express.Router();
 const path = require('path');
-const ShoppingItem = require('../models/shopping-list.js');
-const Overlook = require('overlook');
-const cam = Overlook();
 const request = require('request');
 
 
@@ -30,7 +27,7 @@ router.get('/api/camera',
         );
         console.log(cam.status);
         cam.camera_params(console.log);
-        console.log(Overlook.status);
+        // console.log(Overlook.status);
         res.render('camera.ejs')
     });
 // // use mongoose to get all things in the database

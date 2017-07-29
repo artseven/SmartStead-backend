@@ -12,13 +12,11 @@ const http = require('http');
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 const hue = require('node-hue-api');
-const overlook = require('overlook');
-const cam = overlook();
 const request = require('request');
 require('./config/passport-config');
 // Load our ENVIRONMENT VARIABLES from the .env file in dev
-// require('dotenv').config();
-mongoose.connect('mongodb://localhost/smartstead-backend');
+require('dotenv').config();
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
@@ -76,10 +74,10 @@ app.use('/', lightRoutes);
 // const calendarRoutes = require('./routes/calendar-routes');
 // app.use('/', calendarRoutes);
 // -------------------------------------------------
-// Display the Angular app if no route matches
-// app.use((req, res, next) => {
-//     res.sendFile(__dirname + '/public/index.html');
-// });
+//Display the Angular app if no route matches
+app.use((req, res, next) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 
 // catch 404 and forward to error handler
