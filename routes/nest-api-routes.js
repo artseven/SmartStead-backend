@@ -22,3 +22,25 @@ request(options, function(error, response, body) {
 
     console.log(body);
 });
+
+
+var options = {
+    method: 'GET',
+    url: 'https://developer-api.nest.com/',
+    headers: {
+        authorization: 'Bearer ' + (process.env.NEST_TOKEN),
+        'content-type': 'application/json'
+    },
+    form: {
+        client_id: (process.env.CLIENT_ID),
+        client_secret: (process.env.CLIENT_SECRET),
+        grant_type: (process.env.GRANT_TYPE),
+        code: (process.env.CODE)
+    }
+};
+
+request(options, function(error, response, body) {
+    if (error) throw new Error(error);
+
+    console.log(body);
+});
