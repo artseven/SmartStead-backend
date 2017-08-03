@@ -71,6 +71,9 @@ app.use('/', cameraRoutes);
 const lightRoutes = require('./routes/light-api-routes');
 app.use('/', lightRoutes);
 
+const nestRoutes = require('./routes/nest-api-routes');
+app.use('/', nestRoutes);
+
 // const calendarRoutes = require('./routes/calendar-routes');
 // app.use('/', calendarRoutes);
 // -------------------------------------------------

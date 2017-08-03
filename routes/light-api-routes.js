@@ -9,6 +9,7 @@ const router = express.Router();
 require('dotenv').config();
 
 router.post('/api/lights/on', (req, res, next) => {
+    console.log("LIGHTS ON");
     var options = {
         method: 'POST',
         url: 'https://www.meethue.com/api/sendmessage',
