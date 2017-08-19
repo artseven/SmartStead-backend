@@ -104,7 +104,7 @@ router.post('/api/nest/temperature', (req, res, next) => {
             'content-type': 'application/json',
             authorization: 'Bearer c.5LIwqQ6E36pXfDrz3JoIiNLgTkZb7S6hVyzfIXgsQWO4u6C8UuftU0ISBQYX9JKgvTs9zHOFimbHTiJ44bdaeX7RErCxzdIe87a10VlNIKtW5AXCbE5I77NPZZCTqwzmLduP9lTZJP8Antlv'
         },
-        body: { target_temperature_f: 72 },
+        body: { target_temperature_f: 74 },
         json: true
     };
 
